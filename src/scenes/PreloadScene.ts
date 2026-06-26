@@ -1,16 +1,22 @@
 import Phaser from "phaser";
+import { AssetManager } from "../managers/AssetManager";
 
 export class PreloadScene extends Phaser.Scene {
+
     constructor() {
         super("PreloadScene");
     }
 
     preload(): void {
-        console.log("PreloadScene: Loading Assets...");
+
+        AssetManager.preload(this);
+
     }
 
     create(): void {
-        console.log("Assets Loaded");
+
         this.scene.start("MainMenuScene");
+
     }
+
 }
