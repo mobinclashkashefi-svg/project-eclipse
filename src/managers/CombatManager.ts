@@ -1,4 +1,5 @@
-import { DamageCalculator } from "./DamageCalculator";
+import { DamageCalculator } from "../combat/DamageCalculator";
+import { BattleLog } from "../ui/BattleLog";
 
 export class CombatManager {
 
@@ -10,6 +11,10 @@ export class CombatManager {
         );
 
         target.getStats().takeDamage(damage);
+
+        BattleLog.write(
+            `${attacker.constructor.name} dealt ${damage} damage`
+        );
 
         return damage;
 

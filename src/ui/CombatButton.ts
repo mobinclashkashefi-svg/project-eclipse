@@ -38,4 +38,31 @@ export class CombatButton {
 
     }
 
+    public setEnabled(enabled: boolean): void {
+
+        this.button.disableInteractive();
+
+        if (enabled) {
+
+            this.button
+                .setFillStyle(0x2563eb)
+                .setInteractive({ useHandCursor: true });
+
+        } else {
+
+            this.button
+                .setFillStyle(0x555555);
+
+        }
+
+    }
+
+    public onClick(callback: () => void): void {
+
+        this.button.removeAllListeners();
+
+        this.button.on("pointerdown", callback);
+
+    }
+
 }
