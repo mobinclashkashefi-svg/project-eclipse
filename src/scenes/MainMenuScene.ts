@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { Button } from "../ui/Button";
 import { GameState } from "../core/GameState";
 import { GameStateManager } from "../managers/GameStateManager";
+import { SceneManager } from "../managers/SceneManager";
 
 export class MainMenuScene extends Phaser.Scene {
 
@@ -10,7 +11,9 @@ export class MainMenuScene extends Phaser.Scene {
     }
 
     create(): void {
-GameStateManager.setState(GameState.MAIN_MENU);
+
+        GameStateManager.setState(GameState.MAIN_MENU);
+
         this.cameras.main.setBackgroundColor("#111827");
 
         const centerX = this.cameras.main.centerX;
@@ -43,7 +46,31 @@ GameStateManager.setState(GameState.MAIN_MENU);
                 240 + index * 70,
                 label,
                 () => {
-                    console.log(`${label} clicked`);
+
+                    switch (label) {
+
+                        case "New Game":
+                            SceneManager.changeScene(this, "GameplayScene");
+                            break;
+
+                        case "Continue":
+                            console.log("Continue");
+                            break;
+
+                        case "Settings":
+                            console.log("Settings");
+                            break;
+
+                        case "Credits":
+                            console.log("Credits");
+                            break;
+
+                        case "Exit":
+                            console.log("Exit");
+                            break;
+
+                    }
+
                 }
             );
 

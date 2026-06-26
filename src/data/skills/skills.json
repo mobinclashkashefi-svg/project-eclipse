@@ -1,0 +1,9 @@
+[
+  {
+    "id": "basic_attack",
+    "name": "Basic Attack",
+    "cost": 0,
+    "damage": 10,
+    "type": "physical"
+  }
+]

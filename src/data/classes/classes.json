@@ -1,0 +1,13 @@
+[
+  {
+    "id": "bio",
+    "name": "Bio Hunter",
+    "description": "A balanced fighter using biological enhancements.",
+    "baseHealth": 100,
+    "baseMana": 50,
+    "baseEnergy": 100,
+    "strength": 10,
+    "agility": 10,
+    "intelligence": 10
+  }
+]
