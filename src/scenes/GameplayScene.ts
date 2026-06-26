@@ -5,8 +5,10 @@ import { WorldManager } from "../world/WorldManager";
 import { Player } from "../entities/Player";
 import { Enemy } from "../entities/Enemy";
 import { DataManager } from "../managers/DataManager";
+import { CombatManager } from "../managers/CombatManager";
 import { HealthBar } from "../ui/HealthBar";
 import { CombatButton } from "../ui/CombatButton";
+import { FloatingText } from "../ui/FloatingText";
 
 export class GameplayScene extends Phaser.Scene {
 
@@ -28,21 +30,11 @@ export class GameplayScene extends Phaser.Scene {
         world.create();
 
         // Player
-        this.player = new Player(
-            this,
-            350,
-            350
-        );
-
+        this.player = new Player(this, 350, 350);
         this.player.create();
 
         // Enemy
-        this.enemy = new Enemy(
-            this,
-            850,
-            350
-        );
-
+        this.enemy = new Enemy(this, 850, 350);
         this.enemy.create();
 
         // HP Bars
@@ -54,16 +46,16 @@ export class GameplayScene extends Phaser.Scene {
             18
         );
 
-        this.playerHpBar.setPercent(
-            this.player.getStats().getHealthPercent()
-        );
-
         this.enemyHpBar = new HealthBar(
             this,
             760,
             240,
             180,
             18
+        );
+
+        this.playerHpBar.setPercent(
+            this.player.getStats().getHealthPercent()
         );
 
         this.enemyHpBar.setPercent(
@@ -78,16 +70,41 @@ export class GameplayScene extends Phaser.Scene {
             "ATTACK",
             () => {
 
-                this.enemy.getStats().takeDamage(10);
-
+                const damage = CombatManager.attack(
+                    this.player,
+                    this.enemy
+                );
+                new FloatingText(
+                this,
+                 850,
+                 300,
+                  damage.toString()
+                );
                 this.enemyHpBar.setPercent(
                     this.enemy.getStats().getHealthPercent()
                 );
 
+                console.log("Damage:", damage);
                 console.log(
                     "Enemy HP:",
                     this.enemy.getStats().health
                 );
+
+                if (this.enemy.getStats().health <= 0) {
+
+                    this.add.text(
+                        this.cameras.main.centerX,
+                        520,
+                        "VICTORY!",
+                        {
+                            fontFamily: "Arial",
+                            fontSize: "40px",
+                            color: "#00ff00",
+                            fontStyle: "bold"
+                        }
+                    ).setOrigin(0.5);
+
+                }
 
             }
         );
@@ -95,6 +112,8 @@ export class GameplayScene extends Phaser.Scene {
         console.log("Classes:", DataManager.getClasses());
         console.log("Enemies:", DataManager.getEnemies());
         console.log("Skills:", DataManager.getSkills());
+
+        this.cameras.main.setBackgroundColor("#1b263b");
 
         this.add.text(
             this.cameras.main.centerX,
