@@ -1,27 +1,54 @@
 import Phaser from "phaser";
+import { Button } from "../ui/Button";
+import { GameState } from "../core/GameState";
+import { GameStateManager } from "../managers/GameStateManager";
 
 export class MainMenuScene extends Phaser.Scene {
+
     constructor() {
         super("MainMenuScene");
     }
 
     create(): void {
+GameStateManager.setState(GameState.MAIN_MENU);
         this.cameras.main.setBackgroundColor("#111827");
 
-        this.add
-            .text(640, 180, "PROJECT ECLIPSE", {
-                fontFamily: "Arial",
-                fontSize: "48px",
-                color: "#ffffff"
-            })
-            .setOrigin(0.5);
+        const centerX = this.cameras.main.centerX;
 
-        this.add
-            .text(640, 280, "Version 0.1.0", {
+        this.add.text(
+            centerX,
+            120,
+            "PROJECT ECLIPSE",
+            {
                 fontFamily: "Arial",
-                fontSize: "22px",
-                color: "#8b949e"
-            })
-            .setOrigin(0.5);
+                fontSize: "52px",
+                color: "#ffffff",
+                fontStyle: "bold"
+            }
+        ).setOrigin(0.5);
+
+        const buttons = [
+            "New Game",
+            "Continue",
+            "Settings",
+            "Credits",
+            "Exit"
+        ];
+
+        buttons.forEach((label, index) => {
+
+            new Button(
+                this,
+                centerX,
+                240 + index * 70,
+                label,
+                () => {
+                    console.log(`${label} clicked`);
+                }
+            );
+
+        });
+
     }
+
 }
